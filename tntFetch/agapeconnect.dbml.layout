@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 13.5" name="agapeconnect">
+  <DataContextMoniker Name="/agapeconnectDataContext" />
+  <nestedChildShapes>
+    <classShape Id="cbfd6513-de5e-4a8d-bfcd-538bfb694b66" absoluteBounds="0.75, 0.75, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_StaffBroker_Staff" />
+      <nestedChildShapes>
+        <elementListCompartment Id="013d3abe-5942-4f30-87b2-b1094102897e" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bd15c94c-a23e-419a-8d1e-ed769086da1e" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_StaffBroker_StaffProfile" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7cd3289f-a595-4a16-9fc6-0113bd7b7aa7" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1f6e8511-fd7c-470f-ae08-e3dc44998137" absoluteBounds="6.875, 0.875, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_StaffBroker_StaffPropertyDefinition" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a68d48b0-1841-44fb-b744-4f9beb044379" absoluteBounds="6.89, 1.335, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7ba1234f-b9ea-4683-89a0-e4448f35087c" absoluteBounds="0.75, 4.75, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_mpd_Country" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8affe0f4-519c-4352-907a-582b75b83e9b" absoluteBounds="0.765, 5.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1bae81fe-1be8-44eb-979a-0c7a99b59b17" absoluteBounds="4, 4.75, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_mpd_UserAccountInfo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3a3fe489-547c-4831-b757-f49ce5cf6b5d" absoluteBounds="4.0150000000000006, 5.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 1.53929768880208); (3.75 : 1.53929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_StaffBroker_Staff/AP_StaffBroker_Staff_AP_StaffBroker_StaffProfile" />
+      <nodes>
+        <classShapeMoniker Id="cbfd6513-de5e-4a8d-bfcd-538bfb694b66" />
+        <classShapeMoniker Id="bd15c94c-a23e-419a-8d1e-ed769086da1e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.875 : 1.60179768880208); (5.75 : 1.60179768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_StaffBroker_StaffPropertyDefinition/AP_StaffBroker_StaffPropertyDefinition_AP_StaffBroker_StaffProfile" />
+      <nodes>
+        <classShapeMoniker Id="1f6e8511-fd7c-470f-ae08-e3dc44998137" />
+        <classShapeMoniker Id="bd15c94c-a23e-419a-8d1e-ed769086da1e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 2.7444482421875); (5.90625 : 2.7444482421875); (5.90625 : 4.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_StaffBroker_Staff/AP_StaffBroker_Staff_AP_mpd_UserAccountInfo" />
+      <nodes>
+        <classShapeMoniker Id="cbfd6513-de5e-4a8d-bfcd-538bfb694b66" />
+        <classShapeMoniker Id="1bae81fe-1be8-44eb-979a-0c7a99b59b17" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 5.92390055338542); (4 : 5.92390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_mpd_Country/AP_mpd_Country_AP_mpd_UserAccountInfo" />
+      <nodes>
+        <classShapeMoniker Id="7ba1234f-b9ea-4683-89a0-e4448f35087c" />
+        <classShapeMoniker Id="1bae81fe-1be8-44eb-979a-0c7a99b59b17" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="281d1b5d-4712-4d6c-b83a-a631583f338b" absoluteBounds="4.5, 8.625, 2, 3.1170068359375">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_mpdCalc_StaffBudget" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d6520334-53b3-42bc-8a3f-2822bd529c11" absoluteBounds="4.5150000000000006, 9.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="def0e232-ce56-4595-959a-0ccf3c4ef230" absoluteBounds="1.75, 8.625, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_mpdCalc_Definition" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3b35784d-9c38-40b9-9d9f-f5d95ee084cd" absoluteBounds="1.7649999999999997, 9.085, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.25 : 8.625); (2.25 : 7.09780110677083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_mpdCalc_Definition/AP_mpdCalc_Definition_AP_mpd_Country" />
+      <nodes>
+        <classShapeMoniker Id="def0e232-ce56-4595-959a-0ccf3c4ef230" />
+        <classShapeMoniker Id="7ba1234f-b9ea-4683-89a0-e4448f35087c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.75 : 9.70274983723958); (4.5 : 9.70274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_mpdCalc_Definition/AP_mpdCalc_Definition_AP_mpdCalc_StaffBudget" />
+      <nodes>
+        <classShapeMoniker Id="def0e232-ce56-4595-959a-0ccf3c4ef230" />
+        <classShapeMoniker Id="281d1b5d-4712-4d6c-b83a-a631583f338b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="7db1ed65-6aa2-4827-bbf9-63fd7645ec95" absoluteBounds="1.75, 11.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/agapeconnectDataContext/AP_StaffBroker_Setting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="02bbc7b3-59ca-4796-ae47-dfbb3f9bcfdc" absoluteBounds="1.7650000000000006, 12.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 10.7804996744792); (2.75 : 11.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_mpdCalc_Definition/AP_mpdCalc_Definition_AP_StaffBroker_Setting" />
+      <nodes>
+        <classShapeMoniker Id="def0e232-ce56-4595-959a-0ccf3c4ef230" />
+        <classShapeMoniker Id="7db1ed65-6aa2-4827-bbf9-63fd7645ec95" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.2499995 : 7.09780110677083); (1.2499995 : 12.4142976888021); (1.75 : 12.4142976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_mpd_Country/AP_mpd_Country_AP_StaffBroker_Setting" />
+      <nodes>
+        <classShapeMoniker Id="7ba1234f-b9ea-4683-89a0-e4448f35087c" />
+        <classShapeMoniker Id="7db1ed65-6aa2-4827-bbf9-63fd7645ec95" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 2.95237717447917); (5.82291666666667 : 2.95237717447917 : JumpStart); (5.98958333333333 : 2.95237717447917 : JumpEnd); (6.28125 : 2.95237717447917); (6.28125 : 8.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/agapeconnectDataContext/AP_StaffBroker_Staff/AP_StaffBroker_Staff_AP_mpdCalc_StaffBudget" />
+      <nodes>
+        <classShapeMoniker Id="cbfd6513-de5e-4a8d-bfcd-538bfb694b66" />
+        <classShapeMoniker Id="281d1b5d-4712-4d6c-b83a-a631583f338b" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

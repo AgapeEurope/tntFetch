@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AgapeConnect" Class="agapeconnectDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN-UN1L241MDMF\SQLEXPRESS;Initial Catalog=AgapeConnect;Integrated Security=True" SettingsObjectName="tntFetch.My.MySettings" SettingsPropertyName="AgapeConnectConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AP_StaffBroker_Staff" Member="AP_StaffBroker_Staffs">
+    <Type Name="AP_StaffBroker_Staff">
+      <Column Name="StaffId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CostCenter" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="StaffTypeId" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="UserId1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AP_StaffBroker_Staff_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffProfiles" ThisKey="StaffId" OtherKey="StaffId" Type="AP_StaffBroker_StaffProfile" />
+      <Association Name="AP_StaffBroker_Staff_AP_mpd_UserAccountInfo" Member="AP_mpd_UserAccountInfos" ThisKey="StaffId" OtherKey="staffId" Type="AP_mpd_UserAccountInfo" />
+      <Association Name="AP_StaffBroker_Staff_AP_mpdCalc_StaffBudget" Member="AP_mpdCalc_StaffBudgets" ThisKey="StaffId" OtherKey="StaffId" Type="AP_mpdCalc_StaffBudget" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffProfiles">
+    <Type Name="AP_StaffBroker_StaffProfile">
+      <Column Name="StaffProfileId" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PropertyValue" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="StaffPropertyDefinitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StaffId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AP_StaffBroker_Staff_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_Staff" ThisKey="StaffId" OtherKey="StaffId" Type="AP_StaffBroker_Staff" IsForeignKey="true" />
+      <Association Name="AP_StaffBroker_StaffPropertyDefinition_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffPropertyDefinition" ThisKey="StaffPropertyDefinitionId" OtherKey="StaffPropertyDefinitionId" Type="AP_StaffBroker_StaffPropertyDefinition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_StaffPropertyDefinition" Member="AP_StaffBroker_StaffPropertyDefinitions">
+    <Type Name="AP_StaffBroker_StaffPropertyDefinition">
+      <Column Name="StaffPropertyDefinitionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PropertyName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ViewOrder" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="Display" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PropertyHelp" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Type" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="FixedFieldName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="AP_StaffBroker_StaffPropertyDefinition_AP_StaffBroker_StaffProfile" Member="AP_StaffBroker_StaffProfiles" ThisKey="StaffPropertyDefinitionId" OtherKey="StaffPropertyDefinitionId" Type="AP_StaffBroker_StaffProfile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_mpd_Country" Member="AP_mpd_Countries">
+    <Type Name="AP_mpd_Country">
+      <Column Name="mpdCountryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="isoCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="portalId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="lastUpdated" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="compensationAccounts" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="foreighIncomeAccounts" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="mpdDefId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="AP_mpd_Country_AP_mpd_UserAccountInfo" Member="AP_mpd_UserAccountInfos" ThisKey="mpdCountryId" OtherKey="mpdCountryId" Type="AP_mpd_UserAccountInfo" />
+      <Association Name="AP_mpd_Country_AP_StaffBroker_Setting" Member="AP_StaffBroker_Settings" ThisKey="portalId" OtherKey="PortalId" Type="AP_StaffBroker_Setting" />
+      <Association Name="AP_mpdCalc_Definition_AP_mpd_Country" Member="AP_mpdCalc_Definition" ThisKey="mpdDefId" OtherKey="mpdDefId" Type="AP_mpdCalc_Definition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_mpd_UserAccountInfo" Member="AP_mpd_UserAccountInfos">
+    <Type Name="AP_mpd_UserAccountInfo">
+      <Column Name="mpdUserAccountInfo" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="mpdCountryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="staffId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="period" Type="System.String" DbType="Char(6) NOT NULL" CanBeNull="false" />
+      <Column Name="income" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="expense" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="balance" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="foreignIncome" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="compensation" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Association Name="AP_StaffBroker_Staff_AP_mpd_UserAccountInfo" Member="AP_StaffBroker_Staff" ThisKey="staffId" OtherKey="StaffId" Type="AP_StaffBroker_Staff" IsForeignKey="true" />
+      <Association Name="AP_mpd_Country_AP_mpd_UserAccountInfo" Member="AP_mpd_Country" ThisKey="mpdCountryId" OtherKey="mpdCountryId" Type="AP_mpd_Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_mpdCalc_StaffBudget" Member="AP_mpdCalc_StaffBudgets">
+    <Type Name="AP_mpdCalc_StaffBudget">
+      <Column Name="StaffBudgetId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StaffId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DefinitionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BudgetYearStart" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="SubmittedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ApprovedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ProcessedBy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProcessedOn" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentSupportLevel" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="TotalBudget" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="AP_mpdCalc_Definition_AP_mpdCalc_StaffBudget" Member="AP_mpdCalc_Definition" ThisKey="DefinitionId" OtherKey="mpdDefId" Type="AP_mpdCalc_Definition" IsForeignKey="true" />
+      <Association Name="AP_StaffBroker_Staff_AP_mpdCalc_StaffBudget" Member="AP_StaffBroker_Staff" ThisKey="StaffId" OtherKey="StaffId" Type="AP_StaffBroker_Staff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_mpdCalc_Definition" Member="AP_mpdCalc_Definitions">
+    <Type Name="AP_mpdCalc_Definition">
+      <Column Name="mpdDefId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TabModuleId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ActiveFromYear" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="AssessmentRate" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ShowComplience" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Complience" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="AP_mpdCalc_Definition_AP_mpd_Country" Member="AP_mpd_Countries" ThisKey="mpdDefId" OtherKey="mpdDefId" Type="AP_mpd_Country" Cardinality="One" />
+      <Association Name="AP_mpdCalc_Definition_AP_mpdCalc_StaffBudget" Member="AP_mpdCalc_StaffBudgets" ThisKey="mpdDefId" OtherKey="DefinitionId" Type="AP_mpdCalc_StaffBudget" />
+      <Association Name="AP_mpdCalc_Definition_AP_StaffBroker_Setting" Member="AP_StaffBroker_Settings" ThisKey="PortalId" OtherKey="PortalId" Type="AP_StaffBroker_Setting" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AP_StaffBroker_Settings" Member="AP_StaffBroker_Settings">
+    <Type Name="AP_StaffBroker_Setting">
+      <Column Name="SettingId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SettingName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SettingValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PortalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AP_mpdCalc_Definition_AP_StaffBroker_Setting" Member="AP_mpdCalc_Definition" ThisKey="PortalId" OtherKey="PortalId" Type="AP_mpdCalc_Definition" IsForeignKey="true" />
+      <Association Name="AP_mpd_Country_AP_StaffBroker_Setting" Member="AP_mpd_Country" ThisKey="PortalId" OtherKey="portalId" Type="AP_mpd_Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
