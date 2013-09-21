@@ -19,7 +19,7 @@ Module Module1
 
 
 
-        Dim service = "https://tntdataserver.eu/dataserver/mat/" ' country.AP_StaffBroker_Settings.Where(Function(c) c.SettingName = "DataserverURL" And c.PortalId = country.portalId).First.SettingValue
+        Dim service = "https://tntdataserver.com/dataserver/mkd/" ' country.AP_StaffBroker_Settings.Where(Function(c) c.SettingName = "DataserverURL" And c.PortalId = country.portalId).First.SettingValue
 
 
         Dim restServer As String = "https://thekey.me/cas/v1/tickets/"
