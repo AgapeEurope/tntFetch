@@ -19,7 +19,7 @@ Module Module1
 
 
 
-        Dim service = "https://tntdataserver.com/dataserver/mkd/" ' country.AP_StaffBroker_Settings.Where(Function(c) c.SettingName = "DataserverURL" And c.PortalId = country.portalId).First.SettingValue
+        Dim service = "https://www.agapeconnect.me" ' "https://tntdataserver.com/dataserver/mkd/" ' country.AP_StaffBroker_Settings.Where(Function(c) c.SettingName = "DataserverURL" And c.PortalId = country.portalId).First.SettingValue
 
 
         Dim restServer As String = "https://thekey.me/cas/v1/tickets/"
@@ -53,7 +53,7 @@ Module Module1
                 t.Url = tntURL & "dataquery/dataqueryservice2.asmx"
                 t.Discover()
 
-                postData = "service=" & service
+                postData = "service=" & tntURL
                 request = WebRequest.Create(restServer)
                 byteArray = Encoding.UTF8.GetBytes(postData)
                 request.ContentLength = byteArray.Length
@@ -71,7 +71,7 @@ Module Module1
                 Dim reader As New StreamReader(datastream)
                 Dim ST = reader.ReadToEnd()
 
-                Dim sessionId = t.Auth_Login(service, ST, False).SessionID
+                Dim sessionId = t.Auth_Login(tntURL, ST, False).SessionID
 
                 Dim myInfo = t.MyWebUser_GetInfo(sessionId)
                 Dim allInfo = t.WebUser_GetAllInfo(sessionId)
