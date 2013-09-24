@@ -100,7 +100,10 @@ Module Module1
                             Dim bal = AccountInfo.First.EndingBalance
 
                             Dim income = (From c In Trx Where c.GLAccountIsIncome Select c.Amount).Sum
-                            Dim ForeignIncome = (From c In Trx Where c.GLAccountIsIncome And c.Code.Trim.StartsWith("41") Select c.Amount).Sum
+                            Dim ForeignIncome = (From c In Trx Where c.GLAccountIsIncome And c.GLAccountCode.Trim.StartsWith("50") Select c.Amount).Sum
+                            Dim allocation = (From c In Trx Where c.GLAccountIsIncome And c.GLAccountCode.Trim.StartsWith("57") Select c.Amount).Sum
+                            '  Dim test = From c In Trx Where c.GLAccountIsIncome Order By c.GLAccountCode
+
                             Dim Expense = (From c In Trx Where Not c.GLAccountIsIncome Select c.Amount).Sum
                             Dim summary = From c In d.AP_mpd_UserAccountInfos Where c.mpdCountryId = country.mpdCountryId And c.period = startDate.ToString("yyyyMM") And c.staffId = staff.StaffId
 
@@ -111,7 +114,7 @@ Module Module1
                                 insert.period = startDate.ToString("yyyyMM")
                                 insert.mpdCountryId = country.mpdCountryId
                                 insert.expense = Expense
-                                insert.compensation = 0
+                                insert.compensation = allocation
                                 insert.foreignIncome = ForeignIncome
                                 insert.income = income
                                 d.AP_mpd_UserAccountInfos.InsertOnSubmit(insert)
@@ -121,7 +124,7 @@ Module Module1
                                 summary.First.income = income
                                 summary.First.expense = Expense
                                 summary.First.foreignIncome = ForeignIncome
-                                summary.First.compensation = 0
+                                summary.First.compensation = allocation
 
                             End If
 
@@ -129,11 +132,11 @@ Module Module1
 
 
 
-
+                        d.SubmitChanges()
 
                     Next
 
-                    d.SubmitChanges()
+
 
 
 
