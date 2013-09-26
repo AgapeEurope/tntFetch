@@ -82,69 +82,77 @@ Module Module1
 
                 End If
 
+                'For Each Staff
+                'get past 14 months data (all of it)
+
+                'Parse and iterate the lines..
+                Dim startDate = New Date(Today.AddMonths(-14).Year, Today.AddMonths(-14).Month, 1)
+                Dim EndDate = New Date(Today.AddMonths(1).Year, Today.AddMonths(1).Month, 1).AddDays(-1)
+
+                Console.Write("StartDate: " & startDate.ToString("dd MMM yyyy") & vbNewLine)
+                Console.Write("EndDate: " & EndDate.ToString("dd MMM yyyy") & vbNewLine)
+                Dim allAccountInfo = t.StaffPortal_GetFinancialTransactions(sessionId, "All Accounts", startDate, EndDate, "", False)
+
+                For Each staff In country.AP_mpdCalc_Definition.AP_mpdCalc_StaffBudgets.Select(Function(c) c.AP_StaffBroker_Staff).Distinct
+
+                    Console.Write("Processing: " & staff.DisplayName & vbNewLine)
+
+                    Dim RC = staff.CostCenter
+
+                    Dim AccountInfo = From c In allAccountInfo.FinancialAccounts Where c.Code.Trim = RC.Trim
+
+
+                    Dim Trx = From c In allAccountInfo.FinancialTransactions Where c.FinancialAccountCode.Trim = RC.Trim
+                        Group By y = c.TransactionDate.Year, m = c.TransactionDate.Month Into Group
+                        Select y, m, Income = Group.Where(Function(x) x.GLAccountIsIncome).Sum(Function(x) x.Amount),
+                        Expense = Group.Where(Function(x) Not x.GLAccountIsIncome).Sum(Function(x) x.Amount),
+                        Foreign = Group.Where(Function(x) x.GLAccountIsIncome And x.GLAccountCode.StartsWith("50")).Sum(Function(x) x.Amount),
+                        Allocation = Group.Where(Function(x) x.GLAccountIsIncome And x.GLAccountCode.StartsWith("57")).Sum(Function(x) x.Amount),
+                        Turnover = Group.Sum(Function(x) x.Amount)
+                        Order By y, m
+                    Dim Bal = AccountInfo.First.BeginningBalance
+                    Console.Write("StartBal: " & Bal & vbNewLine)
 
 
 
-                For i As Integer = -12 To -1
-                    Dim startDate = New Date(Today.AddMonths(i).Year, Today.AddMonths(i).Month, 1)
-                    Dim EndDate = startDate.AddMonths(1).AddDays(-1)
-                    Dim allAccountInfo = t.StaffPortal_GetFinancialTransactions(sessionId, "All Accounts", startDate, EndDate, "", False)
+                    For Each mon In Trx
+                        Dim period = New Date(mon.y, mon.m, 1).ToString("yyyyMM")
+                        Console.Write(period & vbNewLine)
+                        Bal += mon.Turnover
+                        Dim summary = From c In d.AP_mpd_UserAccountInfos Where c.mpdCountryId = country.mpdCountryId And c.period = period And c.staffId = staff.StaffId
 
-                    For Each staff In country.AP_mpdCalc_Definition.AP_mpdCalc_StaffBudgets
-                        Dim RC = staff.AP_StaffBroker_Staff.CostCenter
-                        Dim AccountInfo = From c In allAccountInfo.FinancialAccounts Where c.Code.Trim = RC.Trim
+                        If summary.Count = 0 Then
+                            Dim insert As New AP_mpd_UserAccountInfo
+                            insert.staffId = staff.StaffId
+                            insert.balance = Bal
+                            insert.period = period
+                            insert.mpdCountryId = country.mpdCountryId
+                            insert.expense = mon.Expense
+                            insert.compensation = mon.Allocation
+                            insert.foreignIncome = mon.Foreign
+                            insert.income = mon.Income
+                            d.AP_mpd_UserAccountInfos.InsertOnSubmit(insert)
 
-                        Dim Trx = From c In allAccountInfo.FinancialTransactions Where c.FinancialAccountCode.Trim = RC.Trim
-
-                        If AccountInfo.Count > 0 Then
-                            Dim bal = AccountInfo.First.EndingBalance
-
-                            Dim income = (From c In Trx Where c.GLAccountIsIncome Select c.Amount).Sum
-                            Dim ForeignIncome = (From c In Trx Where c.GLAccountIsIncome And c.GLAccountCode.Trim.StartsWith("50") Select c.Amount).Sum
-                            Dim allocation = (From c In Trx Where c.GLAccountIsIncome And c.GLAccountCode.Trim.StartsWith("57") Select c.Amount).Sum
-                            '  Dim test = From c In Trx Where c.GLAccountIsIncome Order By c.GLAccountCode
-
-                            Dim Expense = (From c In Trx Where Not c.GLAccountIsIncome Select c.Amount).Sum
-                            Dim summary = From c In d.AP_mpd_UserAccountInfos Where c.mpdCountryId = country.mpdCountryId And c.period = startDate.ToString("yyyyMM") And c.staffId = staff.StaffId
-
-                            If summary.Count = 0 Then
-                                Dim insert As New AP_mpd_UserAccountInfo
-                                insert.staffId = staff.StaffId
-                                insert.balance = bal
-                                insert.period = startDate.ToString("yyyyMM")
-                                insert.mpdCountryId = country.mpdCountryId
-                                insert.expense = Expense
-                                insert.compensation = allocation
-                                insert.foreignIncome = ForeignIncome
-                                insert.income = income
-                                d.AP_mpd_UserAccountInfos.InsertOnSubmit(insert)
-
-                            Else
-                                summary.First.balance = bal
-                                summary.First.income = income
-                                summary.First.expense = Expense
-                                summary.First.foreignIncome = ForeignIncome
-                                summary.First.compensation = allocation
-
-                            End If
+                        Else
+                            summary.First.balance = Bal
+                            summary.First.income = mon.Income
+                            summary.First.expense = mon.Expense
+                            summary.First.foreignIncome = mon.Foreign
+                            summary.First.compensation = mon.Allocation
 
                         End If
 
 
-
-                        d.SubmitChanges()
-
                     Next
+                    Console.Write("EndBal: " & AccountInfo.First.EndingBalance & " vs " & Bal & vbNewLine)
 
-
-
-
-
-
+                    d.SubmitChanges()
                 Next
-               
 
 
+
+
+                
 
 
                 '  Dim allInfo = t.WebUser_GetAllInfo(sessionId)
