@@ -4,8 +4,17 @@ Imports System.IO
 
 Module Module1
 
-    Sub Main()
+    Sub Main(ByVal args() As String)
+
         GetFinancialSummaries()
+        If args.Count > 0 Then
+            If args(0) = "-t" Or args(0) = "/t" Then
+                Console.Write("Finished!")
+                Console.ReadKey()
+            End If
+        End If
+
+
     End Sub
 
 
@@ -40,7 +49,7 @@ Module Module1
 
         For Each country In countries
             Try
-
+                Console.Write("Processing " & country.name)
 
                
                 Dim t As New tnt.TntMPDDataServerWebService2
@@ -85,13 +94,13 @@ Module Module1
                 Dim startDate = New Date(Today.AddMonths(-14).Year, Today.AddMonths(-14).Month, 1)
                 Dim EndDate = New Date(Today.AddMonths(1).Year, Today.AddMonths(1).Month, 1).AddDays(-1)
 
-                Console.Write("StartDate: " & startDate.ToString("dd MMM yyyy") & vbNewLine)
-                Console.Write("EndDate: " & EndDate.ToString("dd MMM yyyy") & vbNewLine)
+                ' Console.Write("StartDate: " & startDate.ToString("dd MMM yyyy") & vbNewLine)
+                '  Console.Write("EndDate: " & EndDate.ToString("dd MMM yyyy") & vbNewLine)
                 Dim allAccountInfo = t.StaffPortal_GetFinancialTransactions(sessionId, "All Accounts", startDate, EndDate, "", False)
 
                 For Each staff In country.AP_mpdCalc_Definition.AP_mpdCalc_StaffBudgets.Select(Function(c) c.AP_StaffBroker_Staff).Distinct
 
-                    Console.Write("Processing: " & staff.DisplayName & vbNewLine)
+                    Console.Write("  -" & staff.DisplayName & vbNewLine)
 
                     Dim RC = staff.CostCenter
 
@@ -107,13 +116,13 @@ Module Module1
                         Turnover = Group.Sum(Function(x) x.Amount)
                         Order By y, m
                     Dim Bal = AccountInfo.First.BeginningBalance
-                    Console.Write("StartBal: " & Bal & vbNewLine)
+                    '    Console.Write("StartBal: " & Bal & vbNewLine)
 
 
 
                     For Each mon In Trx
                         Dim period = New Date(mon.y, mon.m, 1).ToString("yyyyMM")
-                        Console.Write(period & vbNewLine)
+                        ' Console.Write(period & vbNewLine)
                         Bal += mon.Turnover
                         Dim summary = From c In d.AP_mpd_UserAccountInfos Where c.mpdCountryId = country.mpdCountryId And c.period = period And c.staffId = staff.StaffId
 
@@ -140,7 +149,7 @@ Module Module1
 
 
                     Next
-                    Console.Write("EndBal: " & AccountInfo.First.EndingBalance & " vs " & Bal & vbNewLine)
+                    'Console.Write("EndBal: " & AccountInfo.First.EndingBalance & " vs " & Bal & vbNewLine)
 
                     d.SubmitChanges()
                 Next
@@ -156,11 +165,9 @@ Module Module1
 
 
 
-                Console.Write("Finished!")
-                Console.ReadKey()
+                
             Catch ex As Exception
                 Console.Write(ex.ToString)
-                Console.ReadKey()
             End Try
         Next
 
