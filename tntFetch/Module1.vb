@@ -14,16 +14,12 @@ Module Module1
 
 
         Dim countries = From c In d.AP_mpd_Countries
-
         Dim tuPass = (From c In d.AP_StaffBroker_Settings Where c.PortalId = 0 And c.SettingName = "TrustedUserPassword" Select c.SettingValue).First
 
 
 
         Dim service = "https://www.agapeconnect.me" ' "https://tntdataserver.com/dataserver/mkd/" ' country.AP_StaffBroker_Settings.Where(Function(c) c.SettingName = "DataserverURL" And c.PortalId = country.portalId).First.SettingValue
-
-
         Dim restServer As String = "https://thekey.me/cas/v1/tickets/"
-
         Dim postData = "service=" & service & "&username=trusteduser@agapeconnect.me&password=" & tuPass
 
         Dim request As WebRequest = WebRequest.Create(restServer)
